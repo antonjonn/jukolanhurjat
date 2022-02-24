@@ -15,10 +15,10 @@ import lejos.hardware.sensor.SensorMode;
  * @author 35840
  *
  */
-public class LineFollow {
+public class LineFollow implements Runnable{
 	
 	float[]		sample;
-	
+	int colorvalue;
 	
 	DataExc DEobj;
 //	private EV3UltrasonicSensor us;
@@ -32,64 +32,49 @@ public class LineFollow {
 	public LineFollow (DataExc DE) {
 		DEobj = DE;
 		
-		 color.setRGBMode();
-	        color.setFloodLight(Color.WHITE);
-	        
-	        Color rgb; 
-	        rgb = color.getColor();
-	        
-				
-//	    motorA.setPower(-50);
-//	    motorD.setPower(-50);
-//		ss = new EV3ColorSensor(SensorPort.S4);
+		 
 	    
 		
-//		us = new EV3UltrasonicSensor(SensorPort.S1);
-		run();
+
+		//run();
 	}
 	
 
 
-	
+	@Override
 	public void run() {
-		//EV3ColorSensor color = new EV3ColorSensor(SensorPort.S4);
 		//loputon 
-//		color.setCurrentMode(Color.RED);
-//		color.setFloodlight(true);
-//		color.getRedMode();
+
 		color.setRedMode();
 	     color.setFloodLight(Color.RED);
 	     color.setFloodLight(true);
 		
 		while(true) {
 			int colorvalue;
-			colorvalue = (int)(color.getRed()*100);
+			colorvalue = (int)(color.getRed()*1000);
 			System.out.println(colorvalue);
 			
-//			if (DEobj.getCMD() == 1) {
-				//getRed();
-//				int lightlevel = color.fetchSample(Sample, 0);
-//				color.fetchSample(sample, 0);
-//				int colorValue;
-//				colorValue = (int)(sample[0]*100);
+			if (DEobj.getCMD() == 1) {
 				
-//				if(colorValue < threshold) {
-//					motorA.setPower(0);
-//					motorD.setPower(80);
-//					//LCD.drawInt(, 0, 7);
-//				} else {
-//					motorA.setPower(80);
-//					motorD.setPower(0);
-//				}
+
+				
+				if(colorvalue < threshold) {
+					motorA.setPower(0);
+					motorD.setPower(80);
+					LCD.drawInt(0, 0, 7);
+				} else {
+					motorA.setPower(80);
+					motorD.setPower(0);
+				}
 //				//LCD.drawInt(ss.readValue(), 3, 9, 0);
 //				LCD.asyncRefresh();
-//			} else {
-//				//Stop
-//				motorA.setPower(0);
-//				motorD.setPower(0);
-//				LCD.drawString("stoppppppp", 0, 7);
-//			}
+			} else {
+				//Stop
+				motorA.setPower(0);
+				motorD.setPower(0);
+				LCD.drawString("stoppppppp", 0, 7);
+			}
 				
 		}
 	}
-} //}
+} 

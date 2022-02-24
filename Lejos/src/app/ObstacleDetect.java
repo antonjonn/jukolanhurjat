@@ -1,32 +1,42 @@
 package app;
-
+import lejos.ev3.*;
 import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.robotics.SampleProvider;
 
-public class ObstacleDetect extends Thread {
+public class ObstacleDetect implements Runnable {
 	private DataExc DEobj;
-	
-	private EV3UltrasonicSensor us;
+	int distanceValue = 0;
+	 private static EV3UltrasonicSensor us = new EV3UltrasonicSensor(SensorPort.S1);
 	private final int securityDistance = 25;
-	
+	final SampleProvider sp = us.getDistanceMode();
 	public ObstacleDetect(DataExc DE) {
 		DEobj = DE;
-		us = new EV3UltrasonicSensor(SensorPort.S1);
+		
+		
+		
+		//run();
 	}
-	
-//	public void run() {
-//		while (true) {
-//			if(us.getDistance() > securityDistance) {
-//				DEobj.setCMD(1) ; 
-//			} else {
-//				DEobj.setCMD(0);
-//			}
+	@Override
+	public void run() {
+		while (true) {
+			float [] sample = new float[sp.sampleSize()];
+            sp.fetchSample(sample, 0);
+            distanceValue = (int)(sample[0]*100);
+			if(distanceValue < securityDistance) {
+				DEobj.setCMD(0) ; 
+				Sound.twoBeeps();
+			} else {
+				DEobj.setCMD(1);
+				LCD.drawString("safe", 0, 1);
+				LCD.refresh();
+			}
 //			LCD.drawString("Object detectedd", 0, 1);
 //			LCD.refresh();
 //			Sound.twoBeeps();
 //			Sound.twoBeeps();
-//		}
-//	}
+		}
+	}
 }

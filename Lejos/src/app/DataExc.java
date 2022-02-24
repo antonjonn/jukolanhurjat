@@ -1,6 +1,6 @@
 package app;
 
-public class DataExc {
+public class DataExc implements Runnable{
 
 	private boolean obstacleDetected = false;
 	
@@ -20,5 +20,10 @@ public class DataExc {
 	}
 	public int getCMD() {
 		return CMD;
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -8,11 +8,20 @@ public class main {
 	private static ObstacleDetect ODobj;
 	
 	public static void main(String[] args) {
-		DE = new DataExc();
-		//ODobj = new ObstacleDetect(DE);
-		LFobj = new LineFollow(DE);
+		DataExc DE = new DataExc();
+		LineFollow LFobj = new LineFollow(DE);
+		ObstacleDetect ODobj = new ObstacleDetect(DE);
+		
+		Thread thread_a = new Thread(DE);
+		Thread thread_b = new Thread(LFobj);
+		Thread thread_c = new Thread(ODobj);
+		
+		thread_a.start();
+		thread_b.start();
+		thread_c.start();
 		
 		while(!Button.ESCAPE.isDown()) {
+		
 			
 		}
 		LCD.drawString("finished", 0, 7);
