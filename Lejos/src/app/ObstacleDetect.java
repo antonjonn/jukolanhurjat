@@ -10,7 +10,7 @@ public class ObstacleDetect implements Runnable {
 	private DataExc DEobj;
 	int distanceValue = 0;
 	 private static EV3UltrasonicSensor us = new EV3UltrasonicSensor(SensorPort.S1);
-	private final int securityDistance = 25;
+	private final int securityDistance = 20;
 	final SampleProvider sp = us.getDistanceMode();
 	public ObstacleDetect(DataExc DE) {
 		DEobj = DE;
