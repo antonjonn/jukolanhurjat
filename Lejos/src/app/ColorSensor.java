@@ -11,6 +11,10 @@ import lejos.robotics.ColorIdentifier;
 
 // "lainattu" Stemrobotics color sensor github sivuilta
 
+/**
+ * @author stemrobotics
+ *
+ */
 public class ColorSensor implements ColorDetector, ColorIdentifier
 {
 	EV3ColorSensor	sensor;
